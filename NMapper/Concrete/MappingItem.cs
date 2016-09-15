@@ -12,12 +12,8 @@ namespace NMapper.Concrete
         where TargetT : new()
     {
         #region Variables
-        //private IList<Action<SourceT, TargetT>> ExplicitActions { get; set; }
-        //public IList<MappingProperty> MappingProperties { get; private set; }
         public MappingTypeInfo SourceType { get; private set; }
         public MappingTypeInfo TargetType { get; private set; }
-        //internal MapSingleDlg<SourceT, TargetT> MapSingleMethod { get; set; }
-        //internal MapEnumerableDlg<SourceT, TargetT> MapCollectionMethod { get; set; }
         #endregion
 
         internal static IMappingItem<SourceT, TargetT> CreateMapping(bool mapFields)
@@ -50,7 +46,6 @@ namespace NMapper.Concrete
                 _mappingProps.Add(new MappingProperty(null, tpi, true, ntype?.FullName ?? tpi.PropertyType.FullName, ntype != null, false));
             }
 
-
             FieldInfo[] sourceFi = sourceType.GetFields();
             FieldInfo[] targetFi = targetType.GetFields();
 
@@ -72,16 +67,16 @@ namespace NMapper.Concrete
             {
                 SourceType = new MappingTypeInfo { Hash = sHash, BaseHash = sBaseHash },
                 TargetType = new MappingTypeInfo { Hash = tHash, BaseHash = tBaseHash },
-                ExplicitActions = new List<Action<SourceT, TargetT>>(),
+                ExplicitActions = new Dictionary<Action<SourceT, TargetT>, ExplicitOrders>(),
                 MappingProperties = _mappingProps
             };
         }
 
         #region Explicit/Exclude/Include
-        public IMappingItem<SourceT, TargetT> Explicit(Action<SourceT, TargetT> action)
+        public IMappingItem<SourceT, TargetT> Explicit(Action<SourceT, TargetT> action, ExplicitOrders executionOrder)
         {
-            if (ExplicitActions.FirstOrDefault(f => ActionsEqual(f, action)) == null)
-                ExplicitActions.Add(action);
+            if (ExplicitActions.Keys.FirstOrDefault(f => ActionsEqual(f, action)) == null)
+                ExplicitActions.Add(action, executionOrder);
 
             return this;
         }
@@ -149,7 +144,10 @@ namespace NMapper.Concrete
         {
             try
             {
-                return MapCollectionMethod.Invoke(input.ToArray(), ExplicitActions.ToArray());
+                var bActions = ExplicitActions.Where(w => w.Value == ExplicitOrders.BeforeMap).Select(s => s.Key);
+                var aActions = ExplicitActions.Where(w => w.Value == ExplicitOrders.AfterMap).Select(s => s.Key);
+
+                return MapCollectionMethod.Invoke(input.ToArray(), bActions, aActions);
             }
             catch (Exception e)
             {
@@ -161,7 +159,10 @@ namespace NMapper.Concrete
         {
             try
             {
-                return MapSingleMethod.Invoke(input, ExplicitActions.ToArray());
+                var bActions = ExplicitActions.Where(w => w.Value == ExplicitOrders.BeforeMap).Select(s => s.Key);
+                var aActions = ExplicitActions.Where(w => w.Value == ExplicitOrders.AfterMap).Select(s => s.Key);
+
+                return MapSingleMethod.Invoke(input, bActions, aActions);
             }
             catch (Exception e)
             {
