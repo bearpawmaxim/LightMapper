@@ -1,16 +1,16 @@
 ﻿using NUnit.Framework;
-using NMapper;
+using LightMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NMapper.Tests.Infrastructure;
+using LightMapper.Tests.Infrastructure;
 
-namespace NMapper.Tests
+namespace LightMapper.Tests
 {
     [TestFixture]
-    public class NMapperTests
+    public class LightMapperTests
     {
         private IMapper _mapper;
         private List<SourceClass> _sourceList;
@@ -18,7 +18,7 @@ namespace NMapper.Tests
         [SetUp]
         public void SetUp()
         {
-            _mapper = NMapper.Instance;
+            _mapper = LightMapper.Instance;
             var mappingItem = _mapper.CreateMapping<SourceClass, TargetClass>(true);
             
             _mapper.AddMapping(mappingItem);

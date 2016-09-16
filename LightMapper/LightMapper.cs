@@ -1,15 +1,15 @@
-﻿using NMapper.Concrete;
-using NMapper.Infrastructure;
+﻿using LightMapper.Concrete;
+using LightMapper.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NMapper
+namespace LightMapper
 {
-    public class NMapper : IMapper
+    public class LightMapper : IMapper
     {
         #region Variables
-        public static IMapper Instance => _instance = _instance ?? new NMapper();
+        public static IMapper Instance => _instance = _instance ?? new LightMapper();
 
         private static IMapper _instance;
         private readonly object _locker = new object();

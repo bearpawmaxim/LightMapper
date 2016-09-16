@@ -1,11 +1,11 @@
-﻿using NMapper.Infrastructure;
+﻿using LightMapper.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace NMapper.Concrete
+namespace LightMapper.Concrete
 {
     public sealed class MappingItem<SourceT, TargetT> : MappingData<SourceT, TargetT>, IMappingItem<SourceT, TargetT>
         where SourceT : class

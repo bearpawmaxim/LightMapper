@@ -3,22 +3,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NMapper", "NMapper\NMapper.csproj", "{B778FB9B-38A5-4DAA-8127-C17446F62054}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightMapper", "LightMapper\LightMapper.csproj", "{B778FB9B-38A5-4DAA-8127-C17446F62054}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NMapper.Tests", "NMapper.Tests\NMapper.Tests.csproj", "{9DD22A32-9FB8-4E12-AC75-E8A66EBA4238}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightMapper.Tests", "LightMapper.Tests\LightMapper.Tests.csproj", "{9DD22A32-9FB8-4E12-AC75-E8A66EBA4238}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Release_v35|Any CPU = Release_v35|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B778FB9B-38A5-4DAA-8127-C17446F62054}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B778FB9B-38A5-4DAA-8127-C17446F62054}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B778FB9B-38A5-4DAA-8127-C17446F62054}.Release_v35|Any CPU.ActiveCfg = Release_v35|Any CPU
+		{B778FB9B-38A5-4DAA-8127-C17446F62054}.Release_v35|Any CPU.Build.0 = Release_v35|Any CPU
 		{B778FB9B-38A5-4DAA-8127-C17446F62054}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B778FB9B-38A5-4DAA-8127-C17446F62054}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9DD22A32-9FB8-4E12-AC75-E8A66EBA4238}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9DD22A32-9FB8-4E12-AC75-E8A66EBA4238}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DD22A32-9FB8-4E12-AC75-E8A66EBA4238}.Release_v35|Any CPU.ActiveCfg = Release|Any CPU
+		{9DD22A32-9FB8-4E12-AC75-E8A66EBA4238}.Release_v35|Any CPU.Build.0 = Release|Any CPU
 		{9DD22A32-9FB8-4E12-AC75-E8A66EBA4238}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DD22A32-9FB8-4E12-AC75-E8A66EBA4238}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection

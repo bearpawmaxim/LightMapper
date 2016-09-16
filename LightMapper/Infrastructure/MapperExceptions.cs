@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace NMapper.Infrastructure
+namespace LightMapper.Infrastructure
 {
     [Serializable]
     public class MappingNotFoundException : Exception

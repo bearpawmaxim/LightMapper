@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace NMapper.Infrastructure
+namespace LightMapper.Infrastructure
 {
     public interface IMappingItem
     {

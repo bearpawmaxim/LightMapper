@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NMapper.Concrete
+namespace LightMapper.Concrete
 {
     public static class ExtensionMethods
     {

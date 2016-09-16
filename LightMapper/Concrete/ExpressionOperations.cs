@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace NMapper.Concrete
+namespace LightMapper.Concrete
 {
     internal static class ExpressionOperations
     {

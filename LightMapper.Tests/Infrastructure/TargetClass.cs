@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace NMapper.Tests.Infrastructure
+namespace LightMapper.Tests.Infrastructure
 {
-    internal class SourceClass
+    internal class TargetClass
     {
         public int IntProp { get; set; }
         public bool BoolProp { get; set; }
@@ -12,7 +16,7 @@ namespace NMapper.Tests.Infrastructure
         public Guid GuidField;
         public TimeSpan TimeSpanProp { get; set; }
 
-        public bool DiffProp1 { get; set; }
-        public decimal DiffField1 { get; set; }
+        public bool DiffProp2 { get; set; }
+        public decimal DiffField2 { get; set; }
     }
 }

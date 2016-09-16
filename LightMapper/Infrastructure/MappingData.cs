@@ -1,8 +1,8 @@
-﻿using NMapper.Concrete;
+﻿using LightMapper.Concrete;
 using System;
 using System.Collections.Generic;
 
-namespace NMapper.Infrastructure
+namespace LightMapper.Infrastructure
 {
     public abstract class MappingData<SourceT, TargetT>
     {

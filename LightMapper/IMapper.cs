@@ -1,7 +1,7 @@
-﻿using NMapper.Infrastructure;
+﻿using LightMapper.Infrastructure;
 using System.Collections.Generic;
 
-namespace NMapper
+namespace LightMapper
 {
     public interface IMapper
     {

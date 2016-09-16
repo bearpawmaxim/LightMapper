@@ -1,4 +1,4 @@
-﻿namespace NMapper.Infrastructure
+﻿namespace LightMapper.Infrastructure
 {
     public enum ExplicitOrders : byte
     {
