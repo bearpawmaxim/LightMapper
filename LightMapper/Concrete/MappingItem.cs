@@ -9,7 +9,7 @@ namespace LightMapper.Concrete
 {
     public sealed class MappingItem<SourceT, TargetT> : MappingData<SourceT, TargetT>, IMappingItem<SourceT, TargetT>
         where SourceT : class
-        where TargetT : new()
+        where TargetT : class
     {
         #region Variables
         public MappingTypeInfo SourceType { get; private set; }
@@ -65,8 +65,8 @@ namespace LightMapper.Concrete
 
             return new MappingItem<SourceT, TargetT>
             {
-                SourceType = new MappingTypeInfo { Hash = sHash, BaseHash = sBaseHash },
-                TargetType = new MappingTypeInfo { Hash = tHash, BaseHash = tBaseHash },
+                SourceType = new MappingTypeInfo { Type = sourceType, Hash = sHash, BaseHash = sBaseHash },
+                TargetType = new MappingTypeInfo { Type = targetType, Hash = tHash, BaseHash = tBaseHash },
                 ExplicitActions = new Dictionary<Action<SourceT, TargetT>, ExplicitOrders>(),
                 MappingProperties = _mappingProps
             };
@@ -137,37 +137,6 @@ namespace LightMapper.Concrete
             mp.InMapping = state;
 
             return this;
-        }
-        #endregion
-        #region Mapping
-        public IEnumerable<TargetT> Map(IEnumerable<SourceT> input)
-        {
-            try
-            {
-                var bActions = ExplicitActions.Where(w => w.Value == ExplicitOrders.BeforeMap).Select(s => s.Key);
-                var aActions = ExplicitActions.Where(w => w.Value == ExplicitOrders.AfterMap).Select(s => s.Key);
-
-                return MapCollectionMethod.Invoke(input.ToArray(), bActions, aActions);
-            }
-            catch (Exception e)
-            {
-                throw new MappingFailedException($"Mapping of IEnumerable<{typeof(SourceT).Name}> to IEnumerable<{typeof(TargetT).Name}> failed!", e);
-            }
-        }
-
-        public TargetT Map(SourceT input)
-        {
-            try
-            {
-                var bActions = ExplicitActions.Where(w => w.Value == ExplicitOrders.BeforeMap).Select(s => s.Key);
-                var aActions = ExplicitActions.Where(w => w.Value == ExplicitOrders.AfterMap).Select(s => s.Key);
-
-                return MapSingleMethod.Invoke(input, bActions, aActions);
-            }
-            catch (Exception e)
-            {
-                throw new MappingFailedException($"Mapping of {typeof(SourceT).Name} to {typeof(TargetT).Name} failed!", e);
-            }
         }
         #endregion
     }

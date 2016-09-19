@@ -18,5 +18,7 @@ namespace LightMapper.Tests.Infrastructure
 
         public bool DiffProp2 { get; set; }
         public decimal DiffField2 { get; set; }
+        public DateTime? NullProp { get; set; }
+        public TimeSpan? NullField { get; set; }
     }
 }

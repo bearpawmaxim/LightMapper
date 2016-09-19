@@ -11,10 +11,11 @@
     <owners>Maxim Ocheretianko</owners>
 
   <!-- Ignore, this will get updated at compile time -->
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
   <!-- When empty, this will be set at compile time to the [assembly:AssemblyDescription("")] attribute value -->	
     <summary></summary>
+  
   <!-- When empty, this will be set at compile time to the [assembly:AssemblyTitle("")] attribute value -->
     <description>Object to object mapper called LightMapper</description>
     

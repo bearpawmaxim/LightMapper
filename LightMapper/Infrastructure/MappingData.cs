@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace LightMapper.Infrastructure
 {
-    public abstract class MappingData<SourceT, TargetT>
+    public class MappingData<SourceT, TargetT>
     {
         internal IList<MappingProperty> MappingProperties { get; set; }
-        internal Dictionary<Action<SourceT, TargetT>, ExplicitOrders> ExplicitActions { get; set; }
+        public Dictionary<Action<SourceT, TargetT>, ExplicitOrders> ExplicitActions { get; set; }
         internal MapSingleDlg<SourceT, TargetT> MapSingleMethod { get; set; }
         internal MapEnumerableDlg<SourceT, TargetT> MapCollectionMethod { get; set; }
 
@@ -20,6 +20,16 @@ namespace LightMapper.Infrastructure
 
             var mc = new MappingCompiler<SourceT, TargetT>();
             mc.Compile(ref mappingData);
+        }
+
+        internal Dictionary<Action<PSourceT, PTargetT>, ExplicitOrders> CastExplicit<PSourceT, PTargetT>()
+        {
+            Dictionary<Action<PSourceT, PTargetT>, ExplicitOrders> ret = new Dictionary<Action<PSourceT, PTargetT>, ExplicitOrders>();
+
+            foreach (var act in ExplicitActions)
+                ret.Add(act.Key as Action<PSourceT, PTargetT>, act.Value);
+
+            return ret;
         }
     }
 }

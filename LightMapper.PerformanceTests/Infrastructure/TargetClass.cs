@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace LightMapper.Tests.Infrastructure
+namespace LightMapper.PerformanceTests.Infrastructure
 {
-    internal class SourceClass
+    public class TargetClass
     {
         public int IntProp { get; set; }
         public bool BoolProp { get; set; }
@@ -12,8 +16,8 @@ namespace LightMapper.Tests.Infrastructure
         public Guid GuidField;
         public TimeSpan TimeSpanProp { get; set; }
 
-        public bool DiffProp1 { get; set; }
-        public decimal DiffField1 { get; set; }
+        public bool DiffProp2 { get; set; }
+        public decimal DiffField2 { get; set; }
         public DateTime? NullProp { get; set; }
         public TimeSpan? NullField { get; set; }
     }

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace LightMapper.Tests.Infrastructure
+namespace LightMapper.PerformanceTests.Infrastructure
 {
-    internal class SourceClass
+    public class SourceClass
     {
         public int IntProp { get; set; }
         public bool BoolProp { get; set; }
