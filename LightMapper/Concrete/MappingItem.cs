@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Reflection.Emit;
 
 namespace LightMapper.Concrete
 {
@@ -29,39 +30,8 @@ namespace LightMapper.Concrete
 
             var _mappingProps = new List<MappingProperty>();
 
-            PropertyInfo[] sourcePi = sourceType.GetProperties();
-            PropertyInfo[] targetPi = targetType.GetProperties();
-
-            foreach (PropertyInfo spi in sourcePi)
-            {
-                var tpi = targetPi.FirstOrDefault(t => t.Name.Equals(spi.Name) && t.PropertyType.Equals(spi.PropertyType));
-                var ntype = Nullable.GetUnderlyingType(spi.PropertyType);
-
-                _mappingProps.Add(new MappingProperty(spi, tpi, true, ntype?.FullName ?? spi.PropertyType.FullName, ntype != null, tpi != null));
-            }
-
-            foreach (PropertyInfo tpi in targetPi.Except(sourcePi, a => a.Name))
-            {
-                var ntype = Nullable.GetUnderlyingType(tpi.PropertyType);
-                _mappingProps.Add(new MappingProperty(null, tpi, true, ntype?.FullName ?? tpi.PropertyType.FullName, ntype != null, false));
-            }
-
-            FieldInfo[] sourceFi = sourceType.GetFields();
-            FieldInfo[] targetFi = targetType.GetFields();
-
-            foreach (FieldInfo sfi in sourceFi)
-            {
-                var tfi = targetFi.FirstOrDefault(t => t.Name.Equals(sfi.Name) && t.FieldType.Equals(sfi.FieldType));
-                var ntype = Nullable.GetUnderlyingType(sfi.FieldType);
-
-                _mappingProps.Add(new MappingProperty(sfi, tfi, false, ntype?.FullName ?? sfi.FieldType.FullName, ntype != null, mapFields && tfi != null));
-            }
-
-            foreach (FieldInfo tfi in targetFi.Except(sourceFi, a => a.Name))
-            {
-                var ntype = Nullable.GetUnderlyingType(tfi.FieldType);
-                _mappingProps.Add(new MappingProperty(null, tfi, false, ntype?.FullName ?? tfi.FieldType.FullName, ntype != null, false));
-            }
+            ReflectionUtils.ProcessPropertyInfo(_mappingProps, sourceType.GetProperties(), targetType.GetProperties());
+            ReflectionUtils.ProcessFieldInfo(mapFields, _mappingProps, sourceType.GetFields(), targetType.GetFields());
 
             return new MappingItem<SourceT, TargetT>
             {
@@ -116,7 +86,7 @@ namespace LightMapper.Concrete
             if (sMp == null) throw new ArgumentException($"Property or field {sAccName} not found in SourceT({typeof(SourceT).Name})");
 
             if (!tMp.Type.Equals(sMp.Type)) throw new ArgumentException($"TargetT and SourceT type are not equal ({tMp.Type} != {sMp.Type})");
-            tMp.SetSourceAccessor(sMi, sMi.MemberType == MemberTypes.Property);
+            tMp.SetSourceAccessor(sMi);
 
             return this;
         }

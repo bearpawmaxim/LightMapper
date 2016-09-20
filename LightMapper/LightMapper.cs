@@ -38,10 +38,11 @@ namespace LightMapper
                 }
 
                 existingMapping = mapping as MappingData<SourceT, TargetT>;
-                existingMapping.CompileMapping();
 
                 if ((existingMapping as IMappingItem).SourceType.BaseHash.HasValue && (existingMapping as IMappingItem).TargetType.BaseHash.HasValue)
                     ReflectionUtils.AddBaseExplcit(_mappingStore, existingMapping, existingMapping.ExplicitActions);
+
+                existingMapping.CompileMapping();
 
                 if (idx != -1) _mappingStore[idx] = existingMapping as IMappingItem<SourceT, TargetT>;
                 else _mappingStore.Add(existingMapping as IMappingItem<SourceT, TargetT>);
@@ -90,8 +91,6 @@ namespace LightMapper
         {
             var mi = FindMapping<SourceT, TargetT>() as MappingData<SourceT, TargetT>;
 
-            //return mi.Map(input);
-
             try
             {
                 var bActions = mi.ExplicitActions.Where(w => w.Value == ExplicitOrders.BeforeMap).Select(s => s.Key).ToList();
@@ -115,8 +114,12 @@ namespace LightMapper
             {
                 var bActions = mi.ExplicitActions.Where(w => w.Value == ExplicitOrders.BeforeMap).Select(s => s.Key).ToList();
                 var aActions = mi.ExplicitActions.Where(w => w.Value == ExplicitOrders.AfterMap).Select(s => s.Key).ToList();
+
+                IEnumerable<TargetT> ret = new List<TargetT>(input.Count());
+
+                ret = mi.MapCollectionMethod.Invoke(input, bActions, aActions);
                 
-                return mi.MapCollectionMethod.Invoke(input, bActions, aActions);
+                return ret;
             }
             catch (Exception e)
             {

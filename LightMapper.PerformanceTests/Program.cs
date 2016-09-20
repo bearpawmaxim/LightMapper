@@ -160,7 +160,9 @@ namespace LightMapper.PerformanceTests
                     IntSuccessorProp = new Random(i).Next(1, 1000000),
 
                     NullProp = i % 2 == 0 ? new DateTime?(DateTime.Now) : null,
-                    NullField = i % 2 != 0 ? new TimeSpan?(DateTime.Now.TimeOfDay) : null
+                    NullField = i % 2 != 0 ? new TimeSpan?(DateTime.Now.TimeOfDay) : null,
+
+                    SProp = $"Some string #{i}",
                 });
             }
 

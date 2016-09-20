@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LightMapper.PerformanceTests.Infrastructure
 {
@@ -20,5 +16,7 @@ namespace LightMapper.PerformanceTests.Infrastructure
         public decimal DiffField2 { get; set; }
         public DateTime? NullProp { get; set; }
         public TimeSpan? NullField { get; set; }
+
+        public string SField;
     }
 }

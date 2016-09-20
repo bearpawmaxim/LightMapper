@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Reflection.Emit;
 
@@ -30,7 +31,7 @@ namespace LightMapper.Concrete
             ModuleBuilder mb = ab.DefineDynamicModule("MappingAsmMod", mAsmName);
             TypeBuilder tb = mb.DefineType("LightMapperMappings", TypeAttributes.Public);
 
-            MethodBuilder mExplicit = tb.DefineMethod("ExecuteExplicit", MethodAttributes.Public | MethodAttributes.Static, typeof(void), new[] { typeof(IEnumerable<Action<SourceT,TargetT>>), typeof(SourceT), typeof(TargetT) });
+            MethodBuilder mExplicit = tb.DefineMethod("ExecuteExplicit", MethodAttributes.Public | MethodAttributes.Static, typeof(void), new[] { typeof(IEnumerable<Action<SourceT, TargetT>>), typeof(SourceT), typeof(TargetT) });
             var ilGenExpl = mExplicit.GetILGenerator();
 
             MethodBuilder mSingle = tb.DefineMethod("MapSingle", MethodAttributes.Public | MethodAttributes.Static, typeof(TargetT), new[] { typeof(SourceT), typeof(IEnumerable<Action<SourceT, TargetT>>), typeof(IEnumerable<Action<SourceT, TargetT>>) });
@@ -65,9 +66,10 @@ namespace LightMapper.Concrete
 
         private void EmitCollectionMapping(ILGenerator generator, MappingData<SourceT, TargetT> mappingItem, MethodInfo single)
         {
-            var loc1 = generator.DeclareLocal(typeof(List<TargetT>));
+            generator.DeclareLocal(typeof(List<TargetT>));
             generator.DeclareLocal(typeof(IEnumerator<SourceT>));
             generator.DeclareLocal(typeof(SourceT));
+            generator.DeclareLocal(typeof(int));
 
             var lbl1 = generator.DefineLabel();
             var lbl2 = generator.DefineLabel();
@@ -75,7 +77,12 @@ namespace LightMapper.Concrete
             var lbl4 = generator.DefineLabel();
 
             generator.Emit(OpCodes.Nop);
-            generator.Emit(OpCodes.Newobj, typeof(List<TargetT>).GetConstructor(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[0], null));
+            generator.Emit(OpCodes.Ldarg_0);
+            generator.Emit(OpCodes.Callvirt, typeof(ICollection).GetProperty("Count").GetGetMethod());
+            generator.Emit(OpCodes.Stloc_3);
+
+            generator.Emit(OpCodes.Ldloc_3);
+            generator.Emit(OpCodes.Newobj, typeof(List<TargetT>).GetConstructor(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance, null, new[] { typeof(int) }, null));
             generator.Emit(OpCodes.Stloc_0);
 
             generator.Emit(OpCodes.Ldarg_0);
@@ -174,26 +181,25 @@ namespace LightMapper.Concrete
 
             foreach (var mp in mappingItem.MappingProperties.Where(w => w.InMapping && w.SourceAccessor != null && w.TargetAccessor != null))
             {
-                if (mp.IsProperty)
-                {
-                    generator.Emit(OpCodes.Ldloc_0);
-                    generator.Emit(OpCodes.Ldarg_0);
+                generator.Emit(OpCodes.Ldloc_0);
+                generator.Emit(OpCodes.Ldarg_0);
+
+                if (mp.SourceAccessor.MemberType == MemberTypes.Property)
                     generator.Emit(OpCodes.Callvirt, (mp.SourceAccessor as PropertyInfo).GetGetMethod());
-                    generator.Emit(OpCodes.Callvirt, (mp.TargetAccessor as PropertyInfo).GetSetMethod());
-                }
                 else
-                {
-                    generator.Emit(OpCodes.Ldloc_0);
-                    generator.Emit(OpCodes.Ldarg_0);
                     generator.Emit(OpCodes.Ldfld, mp.SourceAccessor as FieldInfo);
+
+                if (mp.TargetAccessor.MemberType == MemberTypes.Property)
+                    generator.Emit(OpCodes.Callvirt, (mp.TargetAccessor as PropertyInfo).GetSetMethod());
+                else
                     generator.Emit(OpCodes.Stfld, mp.TargetAccessor as FieldInfo);
-                }
             }
 
             generator.Emit(OpCodes.Ldarg_2);
             generator.Emit(OpCodes.Ldarg_0);
             generator.Emit(OpCodes.Ldloc_0);
             generator.Emit(OpCodes.Call, @explicit);
+
             generator.Emit(OpCodes.Ldloc_0);
             generator.Emit(OpCodes.Ret);
         }

@@ -3,9 +3,6 @@ using LightMapper.PerformanceTests.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LightMapper.PerformanceTests
 {
@@ -13,7 +10,9 @@ namespace LightMapper.PerformanceTests
     {
         public void SetUp(Action<SourceClass, TargetClass> @explicit)
         {
-            Mapper.Register<SourceClass, TargetClass>().After(@explicit);
+            Mapper.Register<SourceClass, TargetClass>()
+                .Member(t => t.SField, s => s.SProp)
+                .After(@explicit);
 
             Mapper.Register<SourceClassSuccessor, TargetClassSuccessor>();
         }

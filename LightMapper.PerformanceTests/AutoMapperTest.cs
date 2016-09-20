@@ -16,6 +16,7 @@ namespace LightMapper.PerformanceTests
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<SourceClass, TargetClass>()
+                    .ForMember(t => t.SField, opt => opt.MapFrom(src => src.SProp))
                     .AfterMap(@explicit);
 
                 cfg.CreateMap<SourceClassSuccessor, TargetClassSuccessor>()
