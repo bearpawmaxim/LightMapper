@@ -2,45 +2,20 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>LightMapper</id>
-
-  <!-- When empty, this will be set at compile time to the [assembly:AssemblyProduct("")] attribute value -->
-    <title></title>
-
-  <!-- When empty, these will be set at compile time to either Thread.CurrentPrincipal.Identity.Name or Environment.UserName -->
+    <title>LightMapper</title>
     <authors>Maxim Ocheretianko</authors>
     <owners>Maxim Ocheretianko</owners>
-
-  <!-- Ignore, this will get updated at compile time -->
-    <version>1.0.2</version>
-
-  <!-- When empty, this will be set at compile time to the [assembly:AssemblyDescription("")] attribute value -->	
-    <summary></summary>
-  
-  <!-- When empty, this will be set at compile time to the [assembly:AssemblyTitle("")] attribute value -->
-    <description>Object to object mapper called LightMapper</description>
-    
-  <!-- Set this to false if you don't need to support a license -->
+    <version>$version$</version>
+    <summary>LightMapper object to object mapper</summary>
+    <description>LightMapper object to object mapper</description>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-
-  <releaseNotes></releaseNotes>
-  <tags></tags>
-  
-    <dependencies>
-      <!-- Ignore, all referenced NuGet packages will be added here at compile time -->
-    </dependencies>
-
-    <frameworkAssemblies>
-      <!-- This will get populated at compile time with any System.* references in the project -->
-    <!-- You will need to manually add any non-System.* assemblies here -->
-    </frameworkAssemblies>
+  	<releaseNotes></releaseNotes>
+  	<projectUrl>https://bearpawmaxim.github.io/LightMapper/</projectUrl>
+  	<tags>mapper net</tags>
+    <copyright>Copyright © Maxim Ocheretianko, 2016</copyright>
+    <language>en-US</language>
   </metadata>
   <files>
-  <!-- This will automatically add the binary output of this project at compile time.
-  It will inject a file element like the following:		
-    <file src="**\LightMapper.*" target="lib/[targetFramework]" exclude="LightMapper.*.CodeAnalysisLog.xml;LightMapper.*.lastcodeanalysissucceeded;*Test*.*" />
-  The targetFramework value will be determined by the target framework of the project
-  -->
-
-  <!-- Add any additional files here manually -->
+    <!--<file src="bin\Release\LightMapper.dll" target="lib\net45\" />-->
   </files>
 </package>
