@@ -9,8 +9,8 @@ using System.Reflection.Emit;
 
 namespace LightMapper.Concrete
 {
-    public delegate TargetT MapSingleDlg<SourceT, TargetT>(SourceT source, IEnumerable<Action<SourceT, TargetT>> beforeActions, IEnumerable<Action<SourceT, TargetT>> afterActions);
-    public delegate IEnumerable<TargetT> MapEnumerableDlg<SourceT, TargetT>(IEnumerable<SourceT> source, IEnumerable<Action<SourceT, TargetT>> beforeActions, IEnumerable<Action<SourceT, TargetT>> afterActions);
+    internal delegate TargetT MapSingleDlg<SourceT, TargetT>(SourceT source, IEnumerable<Action<SourceT, TargetT>> beforeActions, IEnumerable<Action<SourceT, TargetT>> afterActions);
+    internal delegate IEnumerable<TargetT> MapEnumerableDlg<SourceT, TargetT>(IEnumerable<SourceT> source, IEnumerable<Action<SourceT, TargetT>> beforeActions, IEnumerable<Action<SourceT, TargetT>> afterActions);
 
     internal class MappingCompiler<SourceT, TargetT>
     {

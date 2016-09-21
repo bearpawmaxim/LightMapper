@@ -19,7 +19,7 @@ namespace LightMapper.PerformanceTests
                     t.DiffProp2 = s.DiffProp1;
                     t.DiffField2 = s.DiffField1;
                 }, ExplicitOrders.AfterMap)
-                .ExplicitField(t => t.SField, s => s.SProp);
+                .ExplicitMember(t => t.SField, s => s.SProp);
 
             _mapper.AddMapping(mi);
 

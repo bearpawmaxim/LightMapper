@@ -6,9 +6,11 @@ using System.Linq;
 
 namespace LightMapper
 {
+    /// <summary>IMapper implementation</summary>
     public class LightMapper : IMapper
     {
         #region Variables
+        /// <summary>Static mapper instance</summary>
         public static IMapper Instance => _instance = _instance ?? new LightMapper();
         private static IMapper _instance;
 
@@ -17,11 +19,13 @@ namespace LightMapper
         private IList<IMappingItem> _mappingStore = new List<IMappingItem>();
         #endregion
         #region Mapping control
+        /// <see cref="IMapper.CreateMapping{SourceT, TargetT}(bool)"/> 
         public IMappingItem<SourceT, TargetT> CreateMapping<SourceT, TargetT>(bool mapFields)
             where SourceT : class
             where TargetT : class
             => MappingItem<SourceT, TargetT>.CreateMapping(mapFields);
 
+        /// <see cref="IMapper.AddMapping{SourceT, TargetT}(IMappingItem{SourceT, TargetT})"/> 
         public void AddMapping<SourceT, TargetT>(IMappingItem<SourceT, TargetT> mapping)
             where SourceT : class
             where TargetT : class
@@ -53,12 +57,13 @@ namespace LightMapper
             }
         }
 
+        /// <see cref="IMapper.UpdateMapping{SourceT, TargetT}(IMappingItem{SourceT, TargetT})"/>
         public void UpdateMapping<SourceT, TargetT>(IMappingItem<SourceT, TargetT> mapping)
             where SourceT : class
             where TargetT : class
             => AddMapping(mapping);
 
-
+        /// <see cref="IMapper.GetMapping{SourceT, TargetT}"/>
         public IMappingItem<SourceT, TargetT> GetMapping<SourceT, TargetT>()
             where SourceT : class
             where TargetT : class
@@ -66,6 +71,7 @@ namespace LightMapper
             return FindMapping<SourceT, TargetT>(true);
         }
 
+        /// <see cref="IMapper.RemoveMapping{SourceT, TargetT}"/>
         public void RemoveMapping<SourceT, TargetT>()
             where SourceT : class
             where TargetT : class
@@ -85,6 +91,7 @@ namespace LightMapper
         }
         #endregion
         #region Mapping
+        /// <see cref="IMapper.Map{SourceT, TargetT}(SourceT)"/>
         public TargetT Map<SourceT, TargetT>(SourceT input)
             where SourceT : class
             where TargetT : class
@@ -103,7 +110,7 @@ namespace LightMapper
                 throw new MappingFailedException($"Mapping of {typeof(SourceT).Name} to {typeof(TargetT).Name} failed!", e);
             }
         }
-
+        /// <see cref="IMapper.Map{SourceT, TargetT}(IEnumerable{SourceT})"/>
         public IEnumerable<TargetT> Map<SourceT, TargetT>(IEnumerable<SourceT> input)
             where SourceT : class
             where TargetT : class

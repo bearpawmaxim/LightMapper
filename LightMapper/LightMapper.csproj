@@ -33,6 +33,7 @@
     <Prefer32Bit>false</Prefer32Bit>
     <LangVersion>6</LangVersion>
     <RunNuGetPack>true</RunNuGetPack>
+    <DocumentationFile>bin\Release\LightMapper.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

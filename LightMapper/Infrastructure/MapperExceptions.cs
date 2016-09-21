@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 namespace LightMapper.Infrastructure
 {
     [Serializable]
@@ -33,3 +34,4 @@ namespace LightMapper.Infrastructure
         public MappingFailedException(SerializationInfo info, StreamingContext context) : base(info, context) { }
     }
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

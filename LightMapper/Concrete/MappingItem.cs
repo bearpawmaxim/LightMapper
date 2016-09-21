@@ -8,12 +8,17 @@ using System.Reflection.Emit;
 
 namespace LightMapper.Concrete
 {
+    /// <summary>IMappingItem realisation. The core of mapper</summary>
+    /// <typeparam name="SourceT">Mapping source type</typeparam>
+    /// <typeparam name="TargetT">Mapping target type</typeparam>
     public sealed class MappingItem<SourceT, TargetT> : MappingData<SourceT, TargetT>, IMappingItem<SourceT, TargetT>
         where SourceT : class
         where TargetT : class
     {
         #region Variables
+        /// <see cref="IMappingItem.SourceType"/>
         public MappingTypeInfo SourceType { get; private set; }
+        /// <see cref="IMappingItem.TargetType"/>
         public MappingTypeInfo TargetType { get; private set; }
         #endregion
 
@@ -43,6 +48,7 @@ namespace LightMapper.Concrete
         }
 
         #region Explicit/Exclude/Include
+        /// <see cref="IMappingItem{SourceT, TargetT}.Exclude(Expression{Func{TargetT, object}})"/>
         public IMappingItem<SourceT, TargetT> Explicit(Action<SourceT, TargetT> action, ExplicitOrders executionOrder)
         {
             if (ExplicitActions.Keys.FirstOrDefault(f => ActionsEqual(f, action)) == null)
@@ -67,8 +73,8 @@ namespace LightMapper.Concrete
 
             return true;
         }
-
-        public IMappingItem<SourceT, TargetT> ExplicitField(Expression<Func<TargetT, object>> target, Expression<Func<SourceT, object>> source)
+        /// <see cref="IMappingItem{SourceT, TargetT}.ExplicitMember(Expression{Func{TargetT, object}}, Expression{Func{SourceT, object}})"/>
+        public IMappingItem<SourceT, TargetT> ExplicitMember(Expression<Func<TargetT, object>> target, Expression<Func<SourceT, object>> source)
         {
             string tAccName = ExpressionOperations.GetMemberName(target);
             if (tAccName == null) throw new ArgumentException($"Incorrect lambda-expression {target.ToString()} for TargetT({typeof(TargetT).Name})!");
@@ -79,19 +85,24 @@ namespace LightMapper.Concrete
             MemberInfo tMi = typeof(TargetT).GetMember(tAccName)[0],
                 sMi = typeof(SourceT).GetMember(sAccName)[0];
 
+            Type tType = tMi.MemberType == MemberTypes.Property ? (tMi as PropertyInfo).PropertyType : (tMi as FieldInfo).FieldType,
+                sType = sMi.MemberType == MemberTypes.Property ? (sMi as PropertyInfo).PropertyType : (sMi as FieldInfo).FieldType;
+
             var tMp = MappingProperties.FirstOrDefault(w => w.TargetAccessor == tMi);
             if (tMp == null) throw new ArgumentException($"Property or field {tAccName} not found in TargetT({typeof(TargetT).Name})");
 
             var sMp = MappingProperties.FirstOrDefault(w => w.SourceAccessor == sMi);
             if (sMp == null) throw new ArgumentException($"Property or field {sAccName} not found in SourceT({typeof(SourceT).Name})");
 
-            if (!tMp.Type.Equals(sMp.Type)) throw new ArgumentException($"TargetT and SourceT type are not equal ({tMp.Type} != {sMp.Type})");
+            if (!tType.Equals(sType)) throw new ArgumentException($"TargetT and SourceT type are not equal ({tType.FullName} != {sType.FullName})");
             tMp.SetSourceAccessor(sMi);
 
             return this;
         }
 
+        /// <see cref="IMappingItem{SourceT, TargetT}.Exclude(Expression{Func{TargetT, object}})"/>
         public IMappingItem<SourceT, TargetT> Exclude(Expression<Func<TargetT, object>> expression) => SetMappingPropertyState(expression, false);
+        /// <see cref="IMappingItem{SourceT, TargetT}.Include(Expression{Func{TargetT, object}})"/>
         public IMappingItem<SourceT, TargetT> Include(Expression<Func<TargetT, object>> expression) => SetMappingPropertyState(expression, true);
 
         private IMappingItem<SourceT, TargetT> SetMappingPropertyState(Expression<Func<TargetT, object>> expression, bool state)
