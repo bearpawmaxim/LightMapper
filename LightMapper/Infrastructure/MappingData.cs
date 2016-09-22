@@ -25,15 +25,5 @@ namespace LightMapper.Infrastructure
             var mc = new MappingCompiler<SourceT, TargetT>();
             mc.Compile(ref mappingData);
         }
-
-        internal Dictionary<Action<PSourceT, PTargetT>, ExplicitOrders> CastExplicit<PSourceT, PTargetT>()
-        {
-            Dictionary<Action<PSourceT, PTargetT>, ExplicitOrders> ret = new Dictionary<Action<PSourceT, PTargetT>, ExplicitOrders>();
-
-            foreach (var act in ExplicitActions)
-                ret.Add(act.Key as Action<PSourceT, PTargetT>, act.Value);
-
-            return ret;
-        }
     }
 }

@@ -18,7 +18,7 @@ var mapper = LightMapper.Instance; // or new LightMapper();
 
 // Creates a mapping from SourceClass to TargetClass
 // including properties and fields
-var mappingItem = _mapper.CreateMapper<SourceClass, TargetClass>(true);
+var mappingItem = _mapper.CreateMapping<SourceClass, TargetClass>(true);
 // Registers a mapping
 mapper.AddMapping(mappingItem);
 ```
@@ -30,7 +30,7 @@ var mappingItem = _mapper.CreateMapper<SourceClass, TargetClass>(true)
     // sets BoolProp to true if DateTimeProp value is older than the week
     .Explicit((src, trg) => trg.BoolProp = src.DateTimeProp < DateTime.Now.AddDays(-7))
     // sets that the DiffField1 of SourceClass will be mapped into DiffField2 of TargetClass
-    .ExplicitField(t => t.DiffField2, s => s.DiffField1);
+    .ExplicitMember(t => t.DiffField2, s => s.DiffField1);
 // Registers a mapping (LightMapper will compile mapping methods)
 mapper.AddMapping(mappingItem);
 ```
@@ -41,7 +41,7 @@ Updating a mapping
 // gets existing mapping fo SourceClass to TargetClass
 var mappingItem = _mapper.GetMapping<SourceClass, TargetClass>();
 // sets that the DiffProp1 of SourceClass will be mapped into DiffProp2 of TargetClass
-mappingItem.ExplicitField(t => t.DiffProp2, s => s.DiffProp1);
+mappingItem.ExplicitMember(t => t.DiffProp2, s => s.DiffProp1);
 // updates mapping (LightMapper will recompile mapping methods)
 _mapper.UpdateMapping(mappingItem);
 ```

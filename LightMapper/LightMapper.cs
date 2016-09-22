@@ -43,9 +43,6 @@ namespace LightMapper
 
                 existingMapping = mapping as MappingData<SourceT, TargetT>;
 
-                if ((existingMapping as IMappingItem).SourceType.BaseHash.HasValue && (existingMapping as IMappingItem).TargetType.BaseHash.HasValue)
-                    ReflectionUtils.AddBaseExplcit(_mappingStore, existingMapping, existingMapping.ExplicitActions);
-
                 existingMapping.CompileMapping();
 
                 if (idx != -1) _mappingStore[idx] = existingMapping as IMappingItem<SourceT, TargetT>;

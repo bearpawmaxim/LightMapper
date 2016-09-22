@@ -14,16 +14,13 @@ namespace LightMapper.PerformanceTests
         {
             _mapper = LightMapper.Instance;
             var mi = _mapper.CreateMapping<SourceClass, TargetClass>(true)
-                .Explicit((s, t) =>
-                {
-                    t.DiffProp2 = s.DiffProp1;
-                    t.DiffField2 = s.DiffField1;
-                }, ExplicitOrders.AfterMap)
+                .Explicit(@explicit, ExplicitOrders.AfterMap)
                 .ExplicitMember(t => t.SField, s => s.SProp);
 
             _mapper.AddMapping(mi);
 
-            var miSucc = _mapper.CreateMapping<SourceClassSuccessor, TargetClassSuccessor>(true);
+            var miSucc = _mapper.CreateMapping<SourceClassSuccessor, TargetClassSuccessor>(true)
+                ;//.AddBaseExplicit(_mapper.GetMapping<SourceClass, TargetClass>());
             _mapper.AddMapping(miSucc);
         }
 

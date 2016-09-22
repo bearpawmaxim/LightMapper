@@ -119,6 +119,23 @@ namespace LightMapper.Concrete
 
             return this;
         }
+
+        /// <see cref="IMappingItem{SourceT, TargetT}.AddBaseExplicit{BSourceT, BTargetT}(IMappingItem{BSourceT, BTargetT})"/>
+        public IMappingItem<SourceT, TargetT> AddBaseExplicit<BSourceT, BTargetT>(IMappingItem<BSourceT, BTargetT> baseMapping)
+            where BSourceT: class
+            where BTargetT: class
+        {
+            if (!SourceType.BaseHash.HasValue) throw new ArgumentException($"TargetT type {typeof(SourceT).Name} doesn't have base type!");
+            if (!TargetType.BaseHash.HasValue) throw new ArgumentException($"SourceT type {typeof(TargetT).Name} doesn't have base type!");
+
+            foreach (var md in (baseMapping as MappingData<BSourceT, BTargetT>).ExplicitActions)
+            {
+                Action<SourceT, TargetT> act = md.Key as Action<SourceT, TargetT>;
+                ExplicitActions.Add(act, md.Value);
+            }
+
+            return this;
+        }
         #endregion
     }
 }

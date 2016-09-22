@@ -28,18 +28,27 @@ namespace LightMapper.Infrastructure
         /// <summary>Defines an explicit mapping for field/property</summary>
         /// <param name="target">TargetT field/property t =&gt; t.TargetPropName</param>
         /// <param name="source">SourceT field/property s =&gt; s.SourcePropName</param>
-        /// <returns></returns>
+        /// <returns>IMappingItem{SourceT, TargetT}</returns>
         IMappingItem<SourceT, TargetT> ExplicitMember(Expression<Func<TargetT, object>> target, Expression<Func<SourceT, object>> source);
         /// <summary>
         /// Excludes field/property from mapping. Influences every mapping scenario (standart, explicit field, explicit action)
         /// </summary>
         /// <param name="expression">TargetT field/property. Ex. t =&gt; t.TargetPropName</param>
-        /// <returns>IMappingItem</returns>
+        /// <returns>IMappingItem{SourceT, TargetT}</returns>
         IMappingItem<SourceT, TargetT> Exclude(Expression<Func<TargetT, object>> expression);
         /// <summary>Includes field/property into mapping</summary>
         /// <param name="expression">TargetT field/property. Ex. t =&gt; t.TargetPropName</param>
-        /// <returns></returns>
+        /// <returns>IMappingItem{SourceT, TargetT}</returns>
         IMappingItem<SourceT, TargetT> Include(Expression<Func<TargetT, object>> expression);
+        /// <summary>
+        /// Adds base class explicit actions (if exists)
+        /// </summary>
+        /// <typeparam name="BSourceT">Base to source {SourceT} type ({SourceT} inherits {BSourceT})</typeparam>
+        /// <typeparam name="BTargetT">Base to target {TargetT} type ({TargetT} inherits {BTargetT})</typeparam>
+        /// <returns>IMappingItem{SourceT, TargetT}</returns>
+        IMappingItem<SourceT, TargetT> AddBaseExplicit<BSourceT, BTargetT>(IMappingItem<BSourceT, BTargetT> baseMapping)
+            where BSourceT : class
+            where BTargetT : class;
         #endregion
     }
 }
