@@ -10,6 +10,7 @@
     <description>LightMapper object to object mapper</description>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
   	<releaseNotes></releaseNotes>
+  	<iconUrl>https://bearpawmaxim.github.io/LightMapper/icon_32.png</iconUrl>
   	<projectUrl>https://bearpawmaxim.github.io/LightMapper/</projectUrl>
   	<tags>mapper net</tags>
     <copyright>Copyright © Maxim Ocheretianko, 2016</copyright>
