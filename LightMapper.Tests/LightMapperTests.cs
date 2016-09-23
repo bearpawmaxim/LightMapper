@@ -21,13 +21,18 @@ namespace LightMapper.Tests
         public void SetUp()
         {
             _mapper = new LightMapper();
-            var mappingItem = _mapper.CreateMapping<SourceClass, TargetClass>(true)
-                .Explicit((s, t) => t.DiffField2 = s.DiffField1, ExplicitOrders.AfterMap)
-                .Explicit((s, t) => t.DiffProp2 = s.DiffProp1, ExplicitOrders.BeforeMap);
-            _mapper.AddMapping(mappingItem);
+            _mapper = LightMapper.Instance;
+            var mi = _mapper.CreateMapping<SourceClass, TargetClass>(true)
+                .Explicit((src,trg) => {
+                    trg.DiffProp2 = src.DiffProp1;
+                    trg.DiffField2 = src.DiffField1;
+                }, ExplicitOrders.AfterMap);
 
-            var mappingItem2 = _mapper.CreateMapping<SourceClassSuccessor, TargetClassSuccessor>(true);
-            _mapper.AddMapping(mappingItem2);
+            _mapper.AddMapping(mi);
+
+            var miSucc = _mapper.CreateMapping<SourceClassSuccessor, TargetClassSuccessor>(true)
+                .AddBaseExplicit(_mapper.GetMapping<SourceClass, TargetClass>());
+            _mapper.AddMapping(miSucc);
 
             _sourceList = SeedSourceData(100000);
             _successorList = SeedSourceSuccessonData(100000);
@@ -55,7 +60,7 @@ namespace LightMapper.Tests
 
             for (int i = 0; i < _sourceList.Count(); i ++)
             {
-                AssertClassesEqual(_sourceList[i], (ret as IList<TargetClass>)[i], false);
+                AssertClassesEqual(_sourceList[i], (ret as List<TargetClass>)[i], false);
             }
         }
 

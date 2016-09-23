@@ -46,8 +46,10 @@
   <ItemGroup>
     <Compile Include="Concrete\ExpressionOperations.cs" />
     <Compile Include="Concrete\ExtensionMethods.cs" />
+    <Compile Include="Concrete\MapperTemplate.cs" />
     <Compile Include="Concrete\MappingCompiler.cs" />
     <Compile Include="Concrete\MappingItem.cs" />
+    <Compile Include="Concrete\MapperActivator.cs" />
     <Compile Include="Concrete\ReflectionUtils.cs" />
     <Compile Include="IMapper.cs" />
     <Compile Include="Infrastructure\ExplicitOrders.cs" />

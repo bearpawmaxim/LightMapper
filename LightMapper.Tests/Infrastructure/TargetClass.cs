@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LightMapper.Tests.Infrastructure
 {
-    internal class TargetClass
+    public class TargetClass
     {
         public int IntProp { get; set; }
         public bool BoolProp { get; set; }

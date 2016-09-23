@@ -2,7 +2,7 @@
 
 namespace LightMapper.Tests.Infrastructure
 {
-    internal class SourceClass
+    public class SourceClass
     {
         public int IntProp { get; set; }
         public bool BoolProp { get; set; }

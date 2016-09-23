@@ -12,18 +12,15 @@ namespace LightMapper.Infrastructure
         internal IList<MappingProperty> MappingProperties { get; set; }
         /// <summary>Internal storage of explicit actions</summary>
         public Dictionary<Action<SourceT, TargetT>, ExplicitOrders> ExplicitActions { get; set; }
-        internal MapSingleDlg<SourceT, TargetT> MapSingleMethod { get; set; }
-        internal MapEnumerableDlg<SourceT, TargetT> MapCollectionMethod { get; set; }
+        internal MapperActivator<SourceT, TargetT> Activator { get; set; }
 
         internal void CompileMapping()
         {
-            MapSingleMethod = null;
-            MapCollectionMethod = null;
-
-            var mappingData = this;
-
+            MapperActivator<SourceT, TargetT> outActivator;
             var mc = new MappingCompiler<SourceT, TargetT>();
-            mc.Compile(ref mappingData);
+            mc.Compile(this, out outActivator);
+
+            Activator = outActivator;
         }
     }
 }

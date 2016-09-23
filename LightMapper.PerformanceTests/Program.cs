@@ -46,7 +46,7 @@ namespace LightMapper.PerformanceTests
             Console.WriteLine($"ExpressMapper:\t{emTtl}ms,\tapprox. {emTtl / CycleCount}ms/run");
             SetFastestColor(lmTtl, Math.Min(amTtl, emTtl));
             Console.WriteLine($"LightMapper:\t{lmTtl}ms,\tapprox. {lmTtl / CycleCount}ms/run");
-            
+
             Console.WriteLine();
         }
 

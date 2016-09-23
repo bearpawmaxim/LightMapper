@@ -20,7 +20,7 @@ namespace LightMapper.PerformanceTests
             _mapper.AddMapping(mi);
 
             var miSucc = _mapper.CreateMapping<SourceClassSuccessor, TargetClassSuccessor>(true)
-                ;//.AddBaseExplicit(_mapper.GetMapping<SourceClass, TargetClass>());
+                .AddBaseExplicit(_mapper.GetMapping<SourceClass, TargetClass>());
             _mapper.AddMapping(miSucc);
         }
 
