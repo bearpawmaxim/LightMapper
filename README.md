@@ -1,17 +1,17 @@
 # LightMapper
 ## Features
 A small mapper with a base set of functionality, that:
-- [x] Is easy to set up and use
-- [x] Available on Nuget as [LightMapper](https://www.nuget.org/packages/LightMapper/)
-- [x] Uses Reflection.Emit for creation of mapping methods dynamically
-- [x] Performs mapping as fast as lightning
-- [x] Can map properties/fields from **SourceT** class type to **TargetT** class type
-- [x] Have an ability to set explicit property/field to property/field mapping _(eg. TargetClass.DiffField2 = SourceClass.DiffField1)_
-- [x] Can execute explicit **Action<SourceT, TargetT>** before/after mapping
-- [x] Can execute explicit actions of **TargetT** base class (in progress)
-- [x] Can create target class via func (for classes with non-parameterless constructors)
-- [x] Can map enums to their underlying types (int in most cases) and vice versa
-- [ ] Can map nested classes (in progress, can be done with help of explicit actions)
+- [x] Is easy to set up and use;
+- [x] Performs mapping as fast as lightning;
+- [x] Available on Nuget as [LightMapper](https://www.nuget.org/packages/LightMapper/);
+- [x] Uses Reflection.Emit for creation of mapping methods dynamically;
+- [x] Can map properties/fields from **SourceT** class type to **TargetT** class type;
+- [x] Have an ability to set explicit property/field to property/field mapping _(eg. TargetClass.DiffField2 = SourceClass.DiffField1)_;
+- [x] Can execute explicit **Action<SourceT, TargetT>** before/after mapping;
+- [x] Can execute explicit actions of **TargetT** base class;
+- [x] Can create target class via func (for classes with non-parameterless constructors);
+- [x] Can map enums to their underlying types (int in most cases) and vice versa;
+- [ ] Can map nested classes (in progress, can be done with help of explicit actions);
 
 ## Examples
 ### Initialization & Mapping creation
