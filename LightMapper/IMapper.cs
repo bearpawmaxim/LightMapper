@@ -11,8 +11,9 @@ namespace LightMapper
         /// <typeparam name="SourceT">Mapping source type</typeparam>
         /// <typeparam name="TargetT">Mapping target type</typeparam>
         /// <param name="mapFields">Include class fields in mapping or nor</param>
+        /// <param name="caseSensitive">Use case sensitiv member search or not</param>
         /// <returns>New unregistered instance of IMappingItem&lt;SourceT, TargetT&gt;</returns>
-        IMappingItem<SourceT, TargetT> CreateMapping<SourceT, TargetT>(bool mapFields)
+        IMappingItem<SourceT, TargetT> CreateMapping<SourceT, TargetT>(bool mapFields, bool caseSensitive = true)
             where SourceT : class
             where TargetT : class;
         /// <summary>Registers a mapping in mapper</summary>

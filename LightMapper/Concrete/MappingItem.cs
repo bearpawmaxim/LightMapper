@@ -22,7 +22,7 @@ namespace LightMapper.Concrete
         public MappingTypeInfo TargetType { get; private set; }
         #endregion
 
-        internal static IMappingItem<SourceT, TargetT> CreateMapping(bool mapFields)
+        internal static IMappingItem<SourceT, TargetT> CreateMapping(bool mapFields, bool caseSensitive)
         {
             Type sourceType = typeof(SourceT),
                 targetType = typeof(TargetT);
@@ -35,8 +35,8 @@ namespace LightMapper.Concrete
 
             var _mappingProps = new List<MappingProperty>();
 
-            ReflectionUtils.ProcessPropertyInfo(_mappingProps, sourceType.GetProperties(), targetType.GetProperties());
-            ReflectionUtils.ProcessFieldInfo(mapFields, _mappingProps, sourceType.GetFields(), targetType.GetFields());
+            ReflectionUtils.ProcessPropertyInfo(_mappingProps, sourceType.GetProperties(), targetType.GetProperties(), caseSensitive);
+            ReflectionUtils.ProcessFieldInfo(mapFields, _mappingProps, sourceType.GetFields(), targetType.GetFields(), caseSensitive);
 
             return new MappingItem<SourceT, TargetT>
             {
@@ -47,6 +47,7 @@ namespace LightMapper.Concrete
             };
         }
 
+        /// <see cref="IMappingItem{SourceT, TargetT}.SetConstructorFunc(Func{TargetT})"/> 
         public IMappingItem<SourceT, TargetT> SetConstructorFunc(Func<TargetT> ctor)
         {
             ClassCtor = ctor;

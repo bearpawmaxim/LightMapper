@@ -20,10 +20,10 @@ namespace LightMapper
         #endregion
         #region Mapping control
         /// <see cref="IMapper.CreateMapping{SourceT, TargetT}(bool)"/> 
-        public IMappingItem<SourceT, TargetT> CreateMapping<SourceT, TargetT>(bool mapFields)
+        public IMappingItem<SourceT, TargetT> CreateMapping<SourceT, TargetT>(bool mapFields, bool caseSensitive = true)
             where SourceT : class
             where TargetT : class
-            => MappingItem<SourceT, TargetT>.CreateMapping(mapFields);
+            => MappingItem<SourceT, TargetT>.CreateMapping(mapFields, caseSensitive);
 
         /// <see cref="IMapper.AddMapping{SourceT, TargetT}(IMappingItem{SourceT, TargetT})"/> 
         public void AddMapping<SourceT, TargetT>(IMappingItem<SourceT, TargetT> mapping)

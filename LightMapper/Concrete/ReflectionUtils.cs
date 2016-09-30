@@ -25,11 +25,11 @@ namespace LightMapper.Concrete
             }
         }
 
-        internal static void ProcessPropertyInfo(List<MappingProperty> _mappingProps, PropertyInfo[] sourcePi, PropertyInfo[] targetPi)
+        internal static void ProcessPropertyInfo(List<MappingProperty> _mappingProps, PropertyInfo[] sourcePi, PropertyInfo[] targetPi, bool caseSensitive)
         {
             foreach (PropertyInfo spi in sourcePi)
             {
-                var tpi = targetPi.FirstOrDefault(t => t.Name.Equals(spi.Name) && (t.PropertyType.Equals(spi.PropertyType) || t.IsEnumConversion(spi)));
+                var tpi = targetPi.FirstOrDefault(t => t.Name.ToLower(caseSensitive).Equals(spi.Name.ToLower(caseSensitive)) && (t.PropertyType.Equals(spi.PropertyType) || t.IsEnumConversion(spi)));
 
                 _mappingProps.Add(new MappingProperty(spi, tpi, tpi != null));
             }
@@ -38,11 +38,11 @@ namespace LightMapper.Concrete
                 _mappingProps.Add(new MappingProperty(null, tpi, false));
         }
 
-        internal static void ProcessFieldInfo(bool mapFields, List<MappingProperty> _mappingProps, FieldInfo[] sourceFi, FieldInfo[] targetFi)
+        internal static void ProcessFieldInfo(bool mapFields, List<MappingProperty> _mappingProps, FieldInfo[] sourceFi, FieldInfo[] targetFi, bool caseSensitive)
         {
             foreach (FieldInfo sfi in sourceFi)
             {
-                var tfi = targetFi.FirstOrDefault(t => t.Name.Equals(sfi.Name) && (t.FieldType.Equals(sfi.FieldType) || t.IsEnumConversion(sfi)));
+                var tfi = targetFi.FirstOrDefault(t => t.Name.ToLower(caseSensitive).Equals(sfi.Name.ToLower(caseSensitive)) && (t.FieldType.Equals(sfi.FieldType) || t.IsEnumConversion(sfi)));
 
                 _mappingProps.Add(new MappingProperty(sfi, tfi, mapFields && tfi != null));
             }
@@ -50,6 +50,8 @@ namespace LightMapper.Concrete
             foreach (FieldInfo tfi in targetFi.Except(sourceFi, a => a.Name))
                 _mappingProps.Add(new MappingProperty(null, tfi, false));
         }
+
+        internal static string ToLower(this string input, bool keepOriginal) => keepOriginal ? input : input.ToLower();
 
         internal static bool IsEnumConversion(this MemberInfo target, MemberInfo source)
         {
