@@ -9,7 +9,10 @@
     <summary>LightMapper object to object mapper</summary>
     <description>LightMapper object to object mapper</description>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-  	<releaseNotes></releaseNotes>
+  	<releaseNotes>1. Overall mapping speedup
+2. Added ability to set custom target class constructor
+3. Addded ability to map enums to its underlying types
+4. Added ability to set case insensitive member search (e.g. SourceClass.PropOne = TargetClass.propone)</releaseNotes>
   	<iconUrl>https://bearpawmaxim.github.io/LightMapper/icon_32.png</iconUrl>
   	<projectUrl>https://bearpawmaxim.github.io/LightMapper/</projectUrl>
   	<tags>mapper net</tags>

@@ -1,6 +1,7 @@
 ﻿using LightMapper.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace LightMapper.Infrastructure
 {
@@ -11,8 +12,10 @@ namespace LightMapper.Infrastructure
     {
         internal IList<MappingProperty> MappingProperties { get; set; }
         /// <summary>Internal storage of explicit actions</summary>
-        public Dictionary<Action<SourceT, TargetT>, ExplicitOrders> ExplicitActions { get; set; }
-        internal MapperActivator<SourceT, TargetT> Activator { get; set; }
+        internal Dictionary<Action<SourceT, TargetT>, ExplicitOrders> ExplicitActions { get; set; }
+        internal MapperActivator<SourceT, TargetT> CreateMapper { get; set; }
+        internal ClassActivator<TargetT> CreateClass { get; set; }
+        internal Func<TargetT> ClassCtor { get; set; }
 
         internal void CompileMapping()
         {
@@ -20,7 +23,7 @@ namespace LightMapper.Infrastructure
             var mc = new MappingCompiler<SourceT, TargetT>();
             mc.Compile(this, out outActivator);
 
-            Activator = outActivator;
+            CreateMapper = outActivator;
         }
     }
 }

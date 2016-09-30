@@ -15,7 +15,8 @@ namespace LightMapper.PerformanceTests
             _mapper = LightMapper.Instance;
             var mi = _mapper.CreateMapping<SourceClass, TargetClass>(true)
                 .Explicit(@explicit, ExplicitOrders.AfterMap)
-                .ExplicitMember(t => t.SField, s => s.SProp);
+                .ExplicitMember(t => t.SField, s => s.SProp)
+                .SetConstructorFunc(() => new TargetClass());
 
             _mapper.AddMapping(mi);
 

@@ -1,4 +1,5 @@
-﻿using LightMapper.PerformanceTests.Infrastructure;
+﻿using LightMapper.Infrastructure;
+using LightMapper.PerformanceTests.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -142,6 +143,7 @@ namespace LightMapper.PerformanceTests
         private static List<SourceClassSuccessor> SeedSourceSuccessonData(int count)
         {
             var lst = new List<SourceClassSuccessor>();
+            var values = Enum.GetValues(typeof(TestEnum));
 
             for (int i = 0; i < count; i++)
             {
@@ -163,6 +165,8 @@ namespace LightMapper.PerformanceTests
                     NullField = i % 2 != 0 ? new TimeSpan?(DateTime.Now.TimeOfDay) : null,
 
                     SProp = $"Some string #{i}",
+                    EnumProp = (TestEnum)i,// (TestEnum)values.GetValue(new Random().Next(values.Length)),
+                    EnumField = i//new Random().Next(values.Length)
                 });
             }
 

@@ -18,5 +18,8 @@ namespace LightMapper.PerformanceTests.Infrastructure
         public TimeSpan? NullField { get; set; }
 
         public string SField;
+
+        public int EnumProp { get; set; }
+        public TestEnum EnumField;
     }
 }

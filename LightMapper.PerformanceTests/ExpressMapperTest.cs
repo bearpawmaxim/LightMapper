@@ -12,9 +12,17 @@ namespace LightMapper.PerformanceTests
         {
             Mapper.Register<SourceClass, TargetClass>()
                 .Member(t => t.SField, s => s.SProp)
-                .After(@explicit);
+                .After(@explicit)
+                .Function(t => t.EnumProp, s => (int)s.EnumProp)
+                .Function(t => t.EnumField, s => (TestEnum)s.EnumField);
 
-            Mapper.Register<SourceClassSuccessor, TargetClassSuccessor>();
+            Mapper.Register<SourceClassSuccessor, TargetClassSuccessor>()
+                .Function(t => t.EnumProp, s => (int)s.EnumProp)
+                .Function(t => t.EnumField, s => (TestEnum)s.EnumField);
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Enum mapping done via Function!");
+            Console.ResetColor();
         }
 
         public long TestSingle<SourceT, TargetT>(SourceT source, int cycleCount)

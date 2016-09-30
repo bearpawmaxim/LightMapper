@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace LightMapper.Infrastructure
 {
@@ -19,6 +20,10 @@ namespace LightMapper.Infrastructure
         where SourceT : class
         where TargetT : class
     {
+        /// <summary>Defines custom constructor Func for TargetT type</summary>
+        /// <param name="constructor">Constructor function</param>
+        /// <returns>IMappingItem{SourceT, TargetT}</returns>
+        IMappingItem<SourceT, TargetT> SetConstructorFunc(Func<TargetT> ctor);
         #region Explicit/Exclude/Include
         /// <summary>Defines an explicit action which will be executed during the mapping process</summary>
         /// <param name="action">Action{SourceT, TargetT} to execute</param>

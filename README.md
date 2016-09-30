@@ -9,6 +9,8 @@ A small mapper with a base set of functionality, that:
 - [x] Have an ability to set explicit property/field to property/field mapping _(eg. TargetClass.DiffField2 = SourceClass.DiffField1)_
 - [x] Can execute explicit **Action<SourceT, TargetT>** before/after mapping
 - [x] Can execute explicit actions of **TargetT** base class (in progress)
+- [x] Can create target class via func (for classes with non-parameterless constructors)
+- [x] Can map enums to their underlying types (int in most cases) and vice versa
 - [ ] Can map nested classes (in progress, can be done with help of explicit actions)
 
 ## Examples
@@ -19,6 +21,16 @@ var mapper = LightMapper.Instance; // or new LightMapper();
 // Creates a mapping from SourceClass to TargetClass
 // including properties and fields
 var mappingItem = _mapper.CreateMapping<SourceClass, TargetClass>(true);
+// Registers a mapping
+mapper.AddMapping(mappingItem);
+```
+
+### Setting custom target type constructor
+```C#
+// // Creates a mapping from SourceClass to TargetClass
+var mappingItem = _mapper.CreateMapper<SourceClass, TargetClass>(true)
+	// sets a custom constructor
+	.SetConstructorFunc(() => new TargetClass());
 // Registers a mapping
 mapper.AddMapping(mappingItem);
 ```

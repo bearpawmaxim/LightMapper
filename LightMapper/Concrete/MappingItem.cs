@@ -47,6 +47,13 @@ namespace LightMapper.Concrete
             };
         }
 
+        public IMappingItem<SourceT, TargetT> SetConstructorFunc(Func<TargetT> ctor)
+        {
+            ClassCtor = ctor;
+
+            return this;
+        }
+
         #region Explicit/Exclude/Include
         /// <see cref="IMappingItem{SourceT, TargetT}.Exclude(Expression{Func{TargetT, object}})"/>
         public IMappingItem<SourceT, TargetT> Explicit(Action<SourceT, TargetT> action, ExplicitOrders executionOrder)

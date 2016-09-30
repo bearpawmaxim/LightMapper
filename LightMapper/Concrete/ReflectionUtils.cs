@@ -29,7 +29,7 @@ namespace LightMapper.Concrete
         {
             foreach (PropertyInfo spi in sourcePi)
             {
-                var tpi = targetPi.FirstOrDefault(t => t.Name.Equals(spi.Name) && t.PropertyType.Equals(spi.PropertyType));
+                var tpi = targetPi.FirstOrDefault(t => t.Name.Equals(spi.Name) && (t.PropertyType.Equals(spi.PropertyType) || t.IsEnumConversion(spi)));
 
                 _mappingProps.Add(new MappingProperty(spi, tpi, tpi != null));
             }
@@ -42,13 +42,25 @@ namespace LightMapper.Concrete
         {
             foreach (FieldInfo sfi in sourceFi)
             {
-                var tfi = targetFi.FirstOrDefault(t => t.Name.Equals(sfi.Name) && t.FieldType.Equals(sfi.FieldType));
+                var tfi = targetFi.FirstOrDefault(t => t.Name.Equals(sfi.Name) && (t.FieldType.Equals(sfi.FieldType) || t.IsEnumConversion(sfi)));
 
                 _mappingProps.Add(new MappingProperty(sfi, tfi, mapFields && tfi != null));
             }
 
             foreach (FieldInfo tfi in targetFi.Except(sourceFi, a => a.Name))
                 _mappingProps.Add(new MappingProperty(null, tfi, false));
+        }
+
+        internal static bool IsEnumConversion(this MemberInfo target, MemberInfo source)
+        {
+            Type targetType = target.MemberType == MemberTypes.Property ? (target as PropertyInfo).PropertyType : (target as FieldInfo).FieldType,
+                sourceType = source.MemberType == MemberTypes.Property ? (source as PropertyInfo).PropertyType : (source as FieldInfo).FieldType;
+
+            if ((targetType.IsEnum && Enum.GetUnderlyingType(targetType).Equals(sourceType))
+                || (sourceType.IsEnum && Enum.GetUnderlyingType(sourceType).Equals(targetType)))
+                return true;
+
+            return false;
         }
     }
 }

@@ -96,12 +96,12 @@ namespace LightMapper
 
             try
             {
-                var mapper = mi.Activator();
+                var mapper = mi.CreateMapper();
 
                 var bActions = mi.ExplicitActions.Where(w => w.Value == ExplicitOrders.BeforeMap).Select(s => s.Key).ToList();
                 var aActions = mi.ExplicitActions.Where(w => w.Value == ExplicitOrders.AfterMap).Select(s => s.Key).ToList();
 
-                return mapper.MapSingle(input, bActions, aActions);
+                return mapper.MapSingle(input, bActions, aActions, mi.ClassCtor);
             }
             catch (Exception e)
             {
@@ -117,14 +117,14 @@ namespace LightMapper
 
             try
             {
-                var mapper = mi.Activator();
+                var mapper = mi.CreateMapper();
 
                 var bActions = mi.ExplicitActions.Where(w => w.Value == ExplicitOrders.BeforeMap).Select(s => s.Key).ToList();
                 var aActions = mi.ExplicitActions.Where(w => w.Value == ExplicitOrders.AfterMap).Select(s => s.Key).ToList();
 
                 IEnumerable<TargetT> ret = new List<TargetT>(input.Count());
 
-                ret = mapper.MapCollection(input, bActions, aActions);
+                ret = mapper.MapCollection(input, bActions, aActions, mi.ClassCtor);
                 
                 return ret;
             }
