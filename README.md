@@ -1,4 +1,7 @@
 # LightMapper
+[![Build status](https://ci.appveyor.com/api/projects/status/ysws54hok4gd87ky/branch/master)](https://ci.appveyor.com/project/bearpawmaxim/lightmapper/branch/master)
+[![Test status](http://teststatusbadge.azurewebsites.net/api/status/bearpawmaxim/LightMapper)](http://teststatusbadge.azurewebsites.net/api/status/bearpawmaxim/LightMapper)
+
 ## Features
 A small mapper with a base set of functionality, that:
 - [x] Is easy to set up and use;
