@@ -21,7 +21,7 @@ namespace LightMapper.Infrastructure
         where TargetT : class
     {
         /// <summary>Defines custom constructor Func for TargetT type</summary>
-        /// <param name="constructor">Constructor function</param>
+        /// <param name="ctor">Constructor function</param>
         /// <returns>IMappingItem{SourceT, TargetT}</returns>
         IMappingItem<SourceT, TargetT> SetConstructorFunc(Func<TargetT> ctor);
         #region Explicit/Exclude/Include

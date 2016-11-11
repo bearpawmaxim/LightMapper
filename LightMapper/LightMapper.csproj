@@ -78,6 +78,6 @@
     </Exec>
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>"$(ProjectDir)nuget.exe" pack "$(ProjectPath)"</PostBuildEvent>
+    <PostBuildEvent>nuget.exe pack "$(ProjectPath)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

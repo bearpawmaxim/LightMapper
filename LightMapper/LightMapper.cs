@@ -19,7 +19,7 @@ namespace LightMapper
         private IList<IMappingItem> _mappingStore = new List<IMappingItem>();
         #endregion
         #region Mapping control
-        /// <see cref="IMapper.CreateMapping{SourceT, TargetT}(bool)"/> 
+        /// <see cref="IMapper.CreateMapping{SourceT, TargetT}(bool, bool)"/> 
         public IMappingItem<SourceT, TargetT> CreateMapping<SourceT, TargetT>(bool mapFields, bool caseSensitive = true)
             where SourceT : class
             where TargetT : class
